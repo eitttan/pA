@@ -15,6 +15,7 @@ int round_robin::choose_server(test_params& params, server* servers[]) {
 
 
 jsq::jsq(double lambda, test_params& params) : entry(lambda) {
+	queue_sizes_.reserve(params.NUM_OF_SERVERS);
 	for (int i = 0; i < params.NUM_OF_SERVERS; i++)
 		queue_sizes_.push_back(0);
 }
@@ -45,6 +46,7 @@ void jsq::collect_data(test_params& params, server* servers[]) {
 
 
 jiq::jiq(double lambda, test_params& params) : entry(lambda) {
+	idle_servers_.reserve(params.NUM_OF_SERVERS);
 	for (int i = 0; i < params.NUM_OF_SERVERS; i++)
 	{
 		idle_servers_.push_back(i);
@@ -72,6 +74,7 @@ void jiq::report_empty_queue(test_params& params, int server_index) {
 
 
 pi::pi(double lambda, test_params& params) : entry(lambda), last_idle_server_(random_number() % params.NUM_OF_SERVERS) {
+	idle_servers_.reserve(params.NUM_OF_SERVERS);
 	for (int i = 0; i < params.NUM_OF_SERVERS; i++)
 	{
 		idle_servers_.push_back(i);
