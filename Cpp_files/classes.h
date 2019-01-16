@@ -40,7 +40,6 @@ public:
 	void accept_jobs(test_params& params, server* servers[], int time);
 	virtual int choose_server(test_params& params, server* servers[]) = 0;
 	virtual void report_empty_queue(test_params& params, int server_index) {};
-	virtual void collect_data(test_params& params, server* servers[]) {};
 protected:
 	std::poisson_distribution<int> income_rate_;
 };

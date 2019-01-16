@@ -22,7 +22,6 @@ class jsq : public entry
 public:
 	jsq(double lambda, test_params& params);
 	int choose_server(test_params& params, server* servers[]);
-	void collect_data(test_params& params, server* servers[]);
 private:
 	vector <int> queue_sizes_;
 };

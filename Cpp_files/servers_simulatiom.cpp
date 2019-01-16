@@ -32,9 +32,6 @@ float simulate(test_params& params) {
 
 	for (int time = 1; time <= SIMULATION_TIME; time++) {
 		for (int i = 0; i < params.NUM_OF_ENTRIES; i++) {
-			entries[i]->collect_data(params, servers);
-		}
-		for (int i = 0; i < params.NUM_OF_ENTRIES; i++) {
 			entries[i]->accept_jobs(params, servers,time);
 		}
 		for (int i = 0; i < params.NUM_OF_SERVERS; i++) {

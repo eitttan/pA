@@ -21,6 +21,9 @@ jsq::jsq(double lambda, test_params& params) : entry(lambda) {
 }
 int jsq::choose_server(test_params& params, server * servers[])
 {
+	for (int i = 0; i < params.NUM_OF_SERVERS; i++) {
+		queue_sizes_[i] = servers[i]->get_queue_size();
+	}
 	int minVal = INT_MAX;
 	vector <int> minValArray;
 	for (int i = 0; i < params.NUM_OF_SERVERS; i++) {
@@ -37,11 +40,6 @@ int jsq::choose_server(test_params& params, server * servers[])
 	}
 	int minSErverIndex = (random_number() % minValArray.size());
 	return minValArray.at(minSErverIndex);
-}
-void jsq::collect_data(test_params& params, server* servers[]) {
-	for (int i = 0; i < params.NUM_OF_SERVERS; i++) {
-		queue_sizes_[i] = servers[i]->get_queue_size();
-	}
 }
 
 
