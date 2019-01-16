@@ -62,13 +62,14 @@ int jiq::choose_server(test_params& params, server* servers[]) {
 		return random_server;
 	}
 }
-void jiq::report_empty_queue(test_params& params, int server_index) {
+void jiq::get_empty_report(test_params& params, int server_index) {
 	for (vector<int>::iterator it = idle_servers_.begin(); it != idle_servers_.end(); ++it) {
 		if (*it == server_index)
 			return;
 	}
 	idle_servers_.push_back(server_index);
 }
+int jiq::get_pool_size() const { return idle_servers_.size(); };
 
 
 pi::pi(double lambda, test_params& params) : entry(lambda), last_idle_server_(random_number() % params.NUM_OF_SERVERS) {
@@ -93,10 +94,31 @@ int pi::choose_server(test_params& params, server* servers[]) {
 		return random_server;
 	}
 }
-void pi::report_empty_queue(test_params& params, int server_index) {
+void pi::get_empty_report(test_params& params, int server_index) {
 	for (vector<int>::iterator it = idle_servers_.begin(); it != idle_servers_.end(); ++it) {
 		if (*it == server_index)
 			return;
 	}
 	idle_servers_.push_back(server_index);
+}
+int pi::get_pool_size() const { return idle_servers_.size(); };
+
+
+jsp::jsp(int index, double lambda) : server(index, lambda) {};
+void jsp::report_empty_queue(test_params& params, entry* entries[]) {
+	int minVal = INT_MAX;
+	vector <int> minValArray;
+	for (int i = 0; i < params.NUM_OF_ENTRIES; i++) {
+		int currVal = entries[i]->get_pool_size();
+		if (currVal < minVal) {
+			minVal = currVal;
+			minValArray.clear();
+			minValArray.push_back(i);
+		}
+		if (currVal == minVal) {
+			minValArray.push_back(i);
+		}
+	}
+	int minEntryIndex = (random_number() % minValArray.size());
+	entries[minValArray.at(minEntryIndex)]->get_empty_report(params, server_index_);
 }

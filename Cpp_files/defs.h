@@ -22,7 +22,7 @@ using std::queue;
 using std::vector;
 using std::string;
 
-typedef enum ALGORITHEM { RANDOM, JSQ, JIQ, PI } ALGORITHEM;//load balance algorithem
+typedef enum ALGORITHEM { RANDOM, JSQ, JIQ, PI , JSP_JIQ, JSP_PI } ALGORITHEM;//load balance algorithem
 typedef enum TEST_SCALE { LARGE, SMALL } TEST_SCALE;//simulation size - 1:10 or 10:100 (entry:server)
 typedef enum SERVER_UNITY { HOMOGENEOUS, HETEROGENEOUS_X2, HETEROGENEOUS_X10 } SERVER_UNITY;//difference between servers
 typedef enum SERVER_SPEED_DISTRIBUTION { FAST_9_SLOW_1, FAST_5_SLOW_5, FAST_1_SLOW_9 } SERVER_SPEED_DISTRIBUTION;//server speed distribution. only if UNITY=HETEROGENEOUS

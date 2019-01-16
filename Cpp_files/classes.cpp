@@ -28,7 +28,7 @@ void server::process_job(test_params& params, int time, entry* entries[] , ofstr
 			waiting_jobs_.pop();
 			completed_jobs_++;
 			if (get_queue_size() == 0) {
-				entries[random_number() % params.NUM_OF_ENTRIES]->report_empty_queue(params ,server_index_);
+				report_empty_queue(params,entries);
 			}
 		}
 		else {
@@ -37,6 +37,9 @@ void server::process_job(test_params& params, int time, entry* entries[] , ofstr
 	}
 }
 int server::get_queue_size() const { return waiting_jobs_.size(); }
+void server::report_empty_queue(test_params& params, entry* entries[]) {
+	entries[random_number() % params.NUM_OF_ENTRIES]->get_empty_report(params, server_index_);
+}
 void server::print() const {
 	cout << "DEBUG - server - time left: " << time_to_finish_job_ << " queue size: " << waiting_jobs_.size() << endl;
 }

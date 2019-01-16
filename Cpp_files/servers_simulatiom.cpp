@@ -7,7 +7,7 @@ float simulate(test_params& params) {
 	server** servers = new server*[params.NUM_OF_SERVERS];
 	switch (params.ENTRY_ALGORITHEM)
 	{
-	case RANDOM: 
+	case RANDOM:
 		for (int i = 0; i < params.NUM_OF_ENTRIES; i++)
 			entries[i] = new random(params.ENTRY_PARAMS[i], params);
 		break;
@@ -16,18 +16,30 @@ float simulate(test_params& params) {
 			entries[i] = new jsq(params.ENTRY_PARAMS[i], params);
 		break;
 	case JIQ:
+	case JSP_JIQ:
 		for (int i = 0; i < params.NUM_OF_ENTRIES; i++)
 			entries[i] = new jiq(params.ENTRY_PARAMS[i], params);
 		break;
 	case PI:
+	case JSP_PI:
 		for (int i = 0; i < params.NUM_OF_ENTRIES; i++)
 			entries[i] = new pi(params.ENTRY_PARAMS[i], params);
 		break;
 	default: break;
 	}
-	for (int i = 0; i < params.NUM_OF_SERVERS; i++)
-		servers[i] = new server(i, params.SERVER_PARAMS[i]);
-	
+	switch (params.ENTRY_ALGORITHEM)
+	{
+	case JSP_JIQ:
+	case JSP_PI:
+		for (int i = 0; i < params.NUM_OF_SERVERS; i++)
+			servers[i] = new jsp(i, params.SERVER_PARAMS[i]);
+		break;
+	default:
+		for (int i = 0; i < params.NUM_OF_SERVERS; i++)
+			servers[i] = new server(i, params.SERVER_PARAMS[i]);
+		break;
+	}
+
 	unsigned int sum_of_jobs = 0;
 
 	for (int time = 1; time <= SIMULATION_TIME; time++) {

@@ -23,6 +23,7 @@ public:
 	void accept_job(job* incoming_job);
 	void process_job(test_params& params, int time, entry* entries[], ofstream& log_file);
 	int get_queue_size() const;
+	virtual void report_empty_queue(test_params& params, entry* entries[]);
 	void print() const;
 protected:
 	int server_index_;
@@ -39,7 +40,8 @@ public:
 	entry(double lambda);
 	void accept_jobs(test_params& params, server* servers[], int time);
 	virtual int choose_server(test_params& params, server* servers[]) = 0;
-	virtual void report_empty_queue(test_params& params, int server_index) {};
+	virtual void get_empty_report(test_params& params, int server_index) {};
+	virtual int get_pool_size() const { return -1; }; //will cause an error
 protected:
 	std::poisson_distribution<int> income_rate_;
 };
