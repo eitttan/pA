@@ -69,7 +69,7 @@ void jiq::get_empty_report(test_params& params, int server_index) {
 	}
 	idle_servers_.push_back(server_index);
 }
-int jiq::get_pool_size() const { return idle_servers_.size(); };
+int jiq::get_pool_size() const { return (int)idle_servers_.size(); };
 
 
 pi::pi(double lambda, test_params& params) : entry(lambda), last_idle_server_(random_number() % params.NUM_OF_SERVERS) {
@@ -101,7 +101,7 @@ void pi::get_empty_report(test_params& params, int server_index) {
 	}
 	idle_servers_.push_back(server_index);
 }
-int pi::get_pool_size() const { return idle_servers_.size(); };
+int pi::get_pool_size() const { return (int)idle_servers_.size(); };
 
 
 jsp::jsp(int index, double lambda) : server(index, lambda) {};

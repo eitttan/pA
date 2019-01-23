@@ -29,7 +29,7 @@ typedef enum SERVER_SPEED_DISTRIBUTION { FAST_9_SLOW_1, FAST_5_SLOW_5, FAST_1_SL
 typedef float ENTRIES_TO_SERVERS_RATIO;//total entries speed divided by total servers speed
 
 const int SEED = 12;
-const int SIMULATION_TIME = 200000;
+const int SIMULATION_TIME = 50000;
 
 static std::default_random_engine random_generator(SEED);
 static std::minstd_rand random_number(SEED);
