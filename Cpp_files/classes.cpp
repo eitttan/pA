@@ -48,11 +48,13 @@ void server::print() const {
 entry::entry(double lambda) : income_rate_(lambda) {}
 void entry::accept_jobs(test_params& params, server* servers[], int time) { //true if a job was accepted
 	int incoming_jobs = income_rate_(random_generator);
-	int chosen_server = choose_server(params, servers);
-	for (int i = 0; i < incoming_jobs; i++)
-	{
-		job* new_job = new job(time);
-		(servers[chosen_server])->accept_job(new_job);
+	if (incoming_jobs != 0) {
+		int chosen_server = choose_server(params, servers);
+		for (int i = 0; i < incoming_jobs; i++)
+		{
+			job* new_job = new job(time);
+			(servers[chosen_server])->accept_job(new_job);
+		}
 	}
 }
 
