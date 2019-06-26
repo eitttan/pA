@@ -122,3 +122,29 @@ void jsp::report_empty_queue(test_params& params, entry* entries[]) {
 	int minEntryIndex = (random_number() % minValArray.size());
 	entries[minValArray.at(minEntryIndex)]->get_empty_report(params, server_index_);
 }
+
+
+jsp_d2::jsp_d2(int index, double lambda) : server(index, lambda) {};
+void jsp_d2::report_empty_queue(test_params& params, entry* entries[]) {
+	if (params.NUM_OF_ENTRIES != 1) {
+		entry* SampledEntries[2];
+		SampledEntries[0] = entries[random_number() % params.NUM_OF_ENTRIES];
+		do {
+			SampledEntries[1] = entries[random_number() % params.NUM_OF_ENTRIES];
+		} while (SampledEntries[0] == SampledEntries[1]);
+		int PoolSize0 = SampledEntries[0]->get_pool_size();
+		int PoolSize1 = SampledEntries[1]->get_pool_size();
+		int minEntryIndex;
+		if (PoolSize0 > PoolSize1)
+			minEntryIndex = 1;
+		else if (PoolSize0 < PoolSize1)
+			minEntryIndex = 0;
+		else
+			minEntryIndex = (random_number() % 2);
+		SampledEntries[minEntryIndex]->get_empty_report(params, server_index_);
+	}
+	else {
+		entries[0]->get_empty_report(params, server_index_);
+	}
+
+}
