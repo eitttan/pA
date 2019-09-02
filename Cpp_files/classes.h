@@ -57,6 +57,7 @@ public:
 	int NUM_OF_SERVERS;
 	float* SERVER_PARAMS;
 	ofstream log_file;
+	vector<int> index_list;
 };
 
 #endif // !CLASSES_H_

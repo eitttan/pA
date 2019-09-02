@@ -18,12 +18,16 @@ float simulate(test_params& params) {
 	case JIQ:
 	case JSP_JIQ:
 	case JSP_D2_JIQ:
+	case JSP_D3_JIQ:
+	case JSP_D5_JIQ:
 		for (int i = 0; i < params.NUM_OF_ENTRIES; i++)
 			entries[i] = new jiq(params.ENTRY_PARAMS[i], params);
 		break;
 	case PI:
 	case JSP_PI:
 	case JSP_D2_PI:
+	case JSP_D3_PI:
+	case JSP_D5_PI:
 		for (int i = 0; i < params.NUM_OF_ENTRIES; i++)
 			entries[i] = new pi(params.ENTRY_PARAMS[i], params);
 		break;
@@ -39,7 +43,17 @@ float simulate(test_params& params) {
 	case JSP_D2_JIQ:
 	case JSP_D2_PI:
 		for (int i = 0; i < params.NUM_OF_SERVERS; i++)
-			servers[i] = new jsp_d2(i, params.SERVER_PARAMS[i]);
+			servers[i] = new jsp_d(i, params.SERVER_PARAMS[i],2);
+		break;
+	case JSP_D3_JIQ:
+	case JSP_D3_PI:
+		for (int i = 0; i < params.NUM_OF_SERVERS; i++)
+			servers[i] = new jsp_d(i, params.SERVER_PARAMS[i],3);
+		break;
+	case JSP_D5_JIQ:
+	case JSP_D5_PI:
+		for (int i = 0; i < params.NUM_OF_SERVERS; i++)
+			servers[i] = new jsp_d(i, params.SERVER_PARAMS[i],5);
 		break;
 	default:
 		for (int i = 0; i < params.NUM_OF_SERVERS; i++)

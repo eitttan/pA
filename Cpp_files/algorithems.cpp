@@ -124,27 +124,25 @@ void jsp::report_empty_queue(test_params& params, entry* entries[]) {
 }
 
 
-jsp_d2::jsp_d2(int index, double lambda) : server(index, lambda) {};
-void jsp_d2::report_empty_queue(test_params& params, entry* entries[]) {
-	if (params.NUM_OF_ENTRIES != 1) {
-		entry* SampledEntries[2];
-		SampledEntries[0] = entries[random_number() % params.NUM_OF_ENTRIES];
-		do {
-			SampledEntries[1] = entries[random_number() % params.NUM_OF_ENTRIES];
-		} while (SampledEntries[0] == SampledEntries[1]);
-		int PoolSize0 = SampledEntries[0]->get_pool_size();
-		int PoolSize1 = SampledEntries[1]->get_pool_size();
-		int minEntryIndex;
-		if (PoolSize0 > PoolSize1)
-			minEntryIndex = 1;
-		else if (PoolSize0 < PoolSize1)
-			minEntryIndex = 0;
-		else
-			minEntryIndex = (random_number() % 2);
-		SampledEntries[minEntryIndex]->get_empty_report(params, server_index_);
+jsp_d::jsp_d(int index, double lambda, int d_value) : server(index, lambda),d_value_(d_value) {};
+void jsp_d::report_empty_queue(test_params& params, entry* entries[]) {
+	int minVal = INT_MAX;
+	vector <int> minValArray, indexArray = params.index_list;
+	shuffle(indexArray.begin(),indexArray.end(), random_generator);
+	for (int i = d_value_; i < params.NUM_OF_ENTRIES; i++) {
+		indexArray.pop_back();
 	}
-	else {
-		entries[0]->get_empty_report(params, server_index_);
+	for (int i = 0; i < d_value_; i++) {
+		int currVal = entries[indexArray[i]]->get_pool_size();
+		if (currVal < minVal) {
+			minVal = currVal;
+			minValArray.clear();
+			minValArray.push_back(indexArray[i]);
+		}
+		if (currVal == minVal) {
+			minValArray.push_back(indexArray[i]);
+		}
 	}
-
+	int minEntryIndex = (random_number() % minValArray.size());
+	entries[minValArray.at(minEntryIndex)]->get_empty_report(params, server_index_);
 }

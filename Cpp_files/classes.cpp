@@ -80,6 +80,9 @@ test_params::test_params(ALGORITHEM a, TEST_SCALE ts, SERVER_UNITY su, SERVER_SP
 	NUM_OF_SERVERS = (ts == LARGE) ? 100 : 10;
 	ENTRY_PARAMS = new float [NUM_OF_ENTRIES];
 	SERVER_PARAMS = new float [NUM_OF_SERVERS];
+	for (int i = 0; i < NUM_OF_ENTRIES; i++) {
+		index_list.push_back(i);
+	}
 	//float entry_sum = 0, server_sum = 0;//DEBUG
 	for (int i = 0; i < NUM_OF_ENTRIES; i++)
 	{

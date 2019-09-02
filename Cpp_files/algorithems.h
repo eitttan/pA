@@ -56,11 +56,13 @@ public:
 	void report_empty_queue(test_params& params, entry* entries[]);
 };
 
-class jsp_d2 : public server
+class jsp_d : public server
 {
 public:
-	jsp_d2(int index, double lambda);
+	jsp_d(int index, double lambda, int d_value);
 	void report_empty_queue(test_params& params, entry* entries[]);
+private:
+	int d_value_;
 };
 
 #endif // !ALGORITHEMS_H_
